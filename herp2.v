@@ -26,8 +26,8 @@ module PG_generator(P,G,X,Y);
     input [5:0] X,Y;
     output [5:0] P,G;
 
-    assign P = X ^ Y;
-    assign G = X & Y;
+    assign P = X ^ Y; // carry propagate
+    assign G = X & Y; // carry generate
 endmodule
 
 // C_(i+1) module
@@ -45,6 +45,7 @@ module cla_generator(C62,G50,P50,C0);
     output [4:0] C62;
     wire C;
 
+    // Geting C_(6-2)
     carry_lookahead 
         C1(C,G50[0],P50[0],C0),
         C2(C62[0],G50[1],P50[1],C),
@@ -54,7 +55,12 @@ module cla_generator(C62,G50,P50,C0);
         C6(C62[4],G50[5],P50[5],C62[3]);
 endmodule
 
+module sumer(Si,Pi,Ci);
+    input Pi,Ci;
+    output Si;
 
+    assign Si = Pi ^ Ci;
+endmodule
 
 // Main module
 module hybridadder8_struct(S,C8,X,Y,C0);
@@ -65,4 +71,5 @@ module hybridadder8_struct(S,C8,X,Y,C0);
     wire [5:0] P,G;
     wire [4:0] C62;
 
+    
 endmodule
