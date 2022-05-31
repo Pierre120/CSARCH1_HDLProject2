@@ -53,3 +53,16 @@ module cla_generator(C62,G50,P50,C0);
         C5(C62[3],G50[4],P50[4],C62[2]),
         C6(C62[4],G50[5],P50[5],C62[3]);
 endmodule
+
+
+
+// Main module
+module hybridadder8_struct(S,C8,X,Y,C0);
+    input [7:0] X,Y;
+    input C0;
+    output [7:0] S;
+    output C8;
+    wire [5:0] P,G;
+    wire [4:0] C62;
+
+endmodule
