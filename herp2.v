@@ -246,7 +246,7 @@ module Sumer(Si,Pi,Ci);
     assign Si = Pi ^ Ci;
 endmodule
 
-// Main module
+// 8-bit Hybrid Adder (2-bit ripple carry_4-bit carry lookahead_2-bit ripple carry)
 module hybridadder8_struct(Si,C8,Xi,Yi,C0);
     input [7:0] Xi,Yi;
     input C0;
