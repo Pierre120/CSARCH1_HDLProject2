@@ -25,10 +25,9 @@ endmodule
 module Full_adder_nc(S,X,Y,Z);
     input X,Y,Z;
     output S;
-    wire S1,C1,C2;
 
-    half_adder H1(S1,C1,X,Y);
-    half_adder H2(S,C2,S1,Z);
+    // 2 XOR Gates
+    S = (X ^ Y) ^ Z;
 endmodule
 
 // P and G generator module
