@@ -129,19 +129,69 @@ module C6_lookahead(C6,G50,P50,C0);
     assign C6 = G50[5] | c62 | c63 | c64 | c65 | c66 | c67;
 endmodule
 
+module carry_ANDs(C2T,C3T,C4T,C5T,C6T,G,P,C0);
+    input [5:0] G,P;
+    input C0;
+    output [1:0] C2T; // AND terms for C2
+    output [2:0] C3T; // AND terms for C3
+    output [3:0] C4T; // AND terms for C4
+    output [4:0] C5T; // AND terms for C5
+    output [5:0] C6T; // AND terms for C6
+
+    // Get all the AND terms for each carry
+    assign
+        C2T[1] = P[1] & G[0], // C2 2nd term
+        C2T[0] = P[1] & P[0] & C0, // C2 3rd term
+        C3T[2] = P[2] & G[1], // C3 2nd term
+        C3T[1] = P[2] & P[1] & G[0], // C3 3rd term
+        C3T[0] = P[2] & P[1] & P[0] & C0, // C3 4th term
+        C4T[3] = P[3] & G[2], // C4 2nd term
+        C4T[2] = P[3] & P[2] & G[1], // C4 3rd term
+        C4T[1] = P[3] & P[2] & P[1] & G[0], // C4 4th term
+        C4T[0] = P[3] & P[2] & P[1] & P[0] & C0, // C4 5th term
+        C5T[4] = P[4] & G[3], // C5 2nd term
+        C5T[3] = P[4] & P[3] & G[2], // C5 3rd term
+        C5T[2] = P[4] & P[3] & P[2] & G[1], // C5 4th term
+        C5T[1] = P[4] & P[3] & P[2] & P[1] & G[0], // C5 5th term
+        C5T[0] = P[4] & P[3] & P[2] & P[1] & P[0] & C0, // C5 6th term
+        C6T[5] = P[5] & G[4], // C6 2nd term
+        C6T[4] = P[5] & P[4] & G[3], // C6 3rd term
+        C6T[3] = P[5] & P[4] & P[3] & G[2], // C6 4th term
+        C6T[2] = P[5] & P[4] & P[3] & P[2] & G[1], // C6 5th term
+        C6T[1] = P[5] & P[4] & P[3] & P[2] & P[1] & G[0], // C6 6th term
+        C6T[0] = P[5] & P[4] & P[3] & P[2] & P[1] & P[0] & C0; // C6 7th term
+endmodule
+
 // Carry-lookahead generator module
 module CLA_generator(C62,G50,P50,C0);
     input [5:0] G50,P50;
     input C0;
     output [4:0] C62;
+    wire [1:0] C2T; // AND terms for C2
+    wire [2:0] C3T; // AND terms for C3
+    wire [3:0] C4T; // AND terms for C4
+    wire [4:0] C5T; // AND terms for C5
+    wire [5:0] C6T; // AND terms for C6
 
+    // Get AND terms of each carry
+    carry_ANDs CANDs(C2T,C3T,C4T,C5T,C6T,G50,P50,C0);
+
+    // OR gate the AND terms of each carry to get the carry
+    assign
+        C62[0] = G50[1] | C2T[1] | C2T[0], // C2
+        C62[1] = G50[2] | C3T[2] | C3T[1] | C3T[0], // C3
+        C62[2] = G50[3] | C4T[3] | C4T[2] | C4T[1] | C4T[0], // C4
+        C62[3] = G50[4] | C5T[4] | C5T[3] | C5T[2] | C5T[1] | C5T[0], // C5
+        C62[4] = G50[5] | C6T[5] | C6T[4] | C6T[3] | C6T[2] | C6T[1] | C6T[0]; // C6
+
+    /*
     // Generate carries
     C2_lookahead C2(C62[0],G50[1:0],P50[1:0],C0);
     C3_lookahead C3(C62[1],G50[2:0],P50[2:0],C0);
     C4_lookahead C4(C62[2],G50[3:0],P50[3:0],C0);
     C5_lookahead C5(C62[3],G50[4:0],P50[4:0],C0);
     C6_lookahead C6(C62[4],G50,P50,C0);
-
+    */
     /*
     wire c22,c23; // Terms for C2
     wire c32,c33,c34; // Terms for C3
