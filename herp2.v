@@ -40,12 +40,18 @@ module PG_generator(P,G,X,Y);
     assign G = X & Y; // carry generate
 endmodule
 
-// C_(i+1) module
-module carry_lookahead(Ci1,Gi,Pi,Ci);
-    input Gi,Pi,Ci;
-    output Ci1;
+// C2 lookahead module
+module C2_lookahead(C2,G10,P10,C0);
+    input [1:0] G10,P10;
+    input C0;
+    output C2;
+    wire c22, c23; // 2nd and 3rd term of C2
 
-    assign Ci1 = Gi | (Pi & Ci);
+    assign 
+        c22 = P10[1] & G10[0], // C2 2nd term
+        c23 = P10[1] & P10[0] & C0; // C2 3rd term
+
+    assign C2 = G10[1] | c22 | c23;
 endmodule
 
 // Carry-lookahead generator module
@@ -53,16 +59,48 @@ module CLA_generator(C62,G50,P50,C0);
     input [5:0] G50,P50;
     input C0;
     output [4:0] C62;
-    wire C;
+    wire c22,c23; // Terms for C2
+    wire c32,c33,c34; // Terms for C3
+    wire c42,c43,c44,c45; // Terms for C4
+    wire c52,c53,c54,c55,c56; // Terms for C5
+    wire c62,c63,c64,c65,c66,c67; // Terms for C6
 
-    // Geting C_(6-2)
-    carry_lookahead 
-        C1(C,G50[0],P50[0],C0),
-        C2(C62[0],G50[1],P50[1],C),
-        C3(C62[1],G50[2],P50[2],C62[0]),
-        C4(C62[2],G50[3],P50[3],C62[1]),
-        C5(C62[3],G50[4],P50[4],C62[2]),
-        C6(C62[4],G50[5],P50[5],C62[3]);
+    /*
+    // Terms for C2
+    assign 
+        c22 = P50[1] & G50[0], // 2nd term
+        c23 = P50[1] & P50[0] & C0; // 3rd term
+
+    // Terms for C3
+    assign
+        c32 = P50[2] & G50[1], // 2nd term
+        c33 = P50[2] & P50[1] & G50[0], // 3rd term
+        c34 = P50[2] & P50[1] & P50[0] & C0; // 4th term
+
+    // Terms for C4
+    assign
+        c42 = P50[3] & G50[2],
+        c43 = P50[3] & P50[2] & G50[1],
+        c44 = P50[3] & P50[2] & P50[1] & G50[0],
+        c45 = P50[3] & P50[2] & P50[1] & P50[0] & C0;
+    
+    // Terms for C5
+    assign
+        c52 = P50[4] & G50[3],
+        c53 = P50[4] & P50[3] & G50[2],
+        c54 = P50[4] & P50[3] & P50[2] & G50[1],
+        c55 = P50[4] & P50[3] & P50[2] & P50[1] & G50[0],
+        c56 = P50[4] & P50[3] & P50[2] & P50[1] & P50[0] & C0;
+
+    // Terms for C6
+    assign
+        c62 = P50[5] & G50[4],
+        c63 = P50[5] & P50[4] & G50[3],
+        c64 = P50[5] & P50[4] & P50[3] & G50[2],
+        c65 = P50[5] & P50[4] & P50[3] & P50[2] & G50[1],
+        c66 = P50[5] & P50[4] & P50[3] & P50[2] & P50[1] & G50[0],
+        c67 = P50[5] & P50[4] & P50[3] & P50[2] & P50[1] & P50[0] & C0;
+    */
 endmodule
 
 module Sumer(Si,Pi,Ci);
