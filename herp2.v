@@ -89,6 +89,24 @@ module C4_lookahead(C4,G30,P30,C0);
     assign C4 = G30[3] | c42 | c43 | c44 | c45;
 endmodule
 
+module C5_lookahead(C5,G40,P40,C0);
+    input [4:0] G40,P40;
+    input C0;
+    output C5;
+    wire c52,c53,c54,c55,c56; // Terms for C5
+
+    // Get AND terms
+    assign
+        c52 = P40[4] & G40[3], // 2nd term
+        c53 = P40[4] & P40[3] & G40[2], // 3rd term
+        c54 = P40[4] & P40[3] & P40[2] & G40[1], // 4th term
+        c55 = P40[4] & P40[3] & P40[2] & P40[1] & G40[0], // 5th term
+        c56 = P40[4] & P40[3] & P40[2] & P40[1] & P40[0] & C0; // 6th term
+
+    // Generate C5
+    assign C5 = G40[4] | c52 | c53 | c54 | c55 | c56;
+endmodule
+
 // Carry-lookahead generator module
 module CLA_generator(C62,G50,P50,C0);
     input [5:0] G50,P50;
