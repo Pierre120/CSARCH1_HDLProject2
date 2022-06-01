@@ -187,6 +187,7 @@ module CLA_generator(C62,G50,P50,C0);
     */
 endmodule
 
+// Sumer module
 module Sumer(Si,Pi,Ci);
     input Pi,Ci;
     output Si;
