@@ -56,6 +56,7 @@ module C2_lookahead(C2,G10,P10,C0);
     assign C2 = G10[1] | c22 | c23;
 endmodule
 
+// C3 lookahead module
 module C3_lookahead(C3,G20,P20,C0);
     input [2:0] G20,P20;
     input C0;
@@ -72,6 +73,7 @@ module C3_lookahead(C3,G20,P20,C0);
     assign C3 = G20[2] | c32 | c33 | c34;
 endmodule
 
+// C4 lookahead module
 module C4_lookahead(C4,G30,P30,C0);
     input [3:0] G30,P30;
     input C0;
@@ -89,6 +91,7 @@ module C4_lookahead(C4,G30,P30,C0);
     assign C4 = G30[3] | c42 | c43 | c44 | c45;
 endmodule
 
+// C5 lookahead module
 module C5_lookahead(C5,G40,P40,C0);
     input [4:0] G40,P40;
     input C0;
@@ -105,6 +108,26 @@ module C5_lookahead(C5,G40,P40,C0);
 
     // Generate C5
     assign C5 = G40[4] | c52 | c53 | c54 | c55 | c56;
+endmodule
+
+// C6 lookahead module
+module C6_lookahead(C6,G50,P50,C0);
+    input [5:0] G50,P50;
+    input C0;
+    output C6;
+    wire c62,c63,c64,c65,c66,c67; // Terms for C6
+
+    // Get AND terms
+    assign
+        c62 = P50[5] & G50[4], // 2nd term
+        c63 = P50[5] & P50[4] & G50[3], // 3rd term
+        c64 = P50[5] & P50[4] & P50[3] & G50[2], // 4th term
+        c65 = P50[5] & P50[4] & P50[3] & P50[2] & G50[1], // 5th term
+        c66 = P50[5] & P50[4] & P50[3] & P50[2] & P50[1] & G50[0], // 6th term
+        c67 = P50[5] & P50[4] & P50[3] & P50[2] & P50[1] & P50[0] & C0; // 7th term
+
+    // Generate C6
+    assign C6 = G50[5] | c62 | c63 | c64 | c65 | c66 | c67;
 endmodule
 
 // Carry-lookahead generator module
