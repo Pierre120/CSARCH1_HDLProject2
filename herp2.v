@@ -135,13 +135,21 @@ module CLA_generator(C62,G50,P50,C0);
     input [5:0] G50,P50;
     input C0;
     output [4:0] C62;
+
+    // Generate carries
+    C2_lookahead C2(C62[0],G50[1:0],P50[1:0],C0);
+    C3_lookahead C3(C62[1],G50[2:0],P50[2:0],C0);
+    C4_lookahead C4(C62[2],G50[3:0],P50[3:0],C0);
+    C5_lookahead C5(C62[3],G50[4:0],P50[4:0],C0);
+    C6_lookahead C6(C62[4],G50,P50,C0);
+
+    /*
     wire c22,c23; // Terms for C2
     wire c32,c33,c34; // Terms for C3
     wire c42,c43,c44,c45; // Terms for C4
     wire c52,c53,c54,c55,c56; // Terms for C5
     wire c62,c63,c64,c65,c66,c67; // Terms for C6
 
-    /*
     // Terms for C2
     assign 
         c22 = P50[1] & G50[0], // 2nd term
