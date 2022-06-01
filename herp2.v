@@ -7,12 +7,12 @@ module half_adder(S,C,X,Y);
     output S,C;
 
     assign S = X ^ Y;
-    assign C = X & Y
+    assign C = X & Y;
 endmodule
 
 // Full-Adder module
 module Full_adder(S,C,X,Y,Z);
-    input X,Y;
+    input X,Y,Z;
     output S,C;
     wire S1,C1,C2;
 
@@ -23,7 +23,7 @@ endmodule
 
 // Full-Adder (no carry) module
 module Full_adder_nc(S,X,Y,Z);
-    input X,Y;
+    input X,Y,Z;
     output S;
     wire S1,C1,C2;
 
@@ -206,7 +206,7 @@ module hybridadder8_struct(Si,C8,Xi,Yi,C0);
     wire C1,C7;
 
     // Generate the P_(5-0) and G_(5-0)
-    PG_generator PG(P,G,X[5:0],Y[5:0]);
+    PG_generator PG(P,G,Xi[5:0],Yi[5:0]);
 
     // Generate the carries from carry-lookahead generator
     CLA_generator CLA(C62,G,P,C0);
@@ -223,5 +223,5 @@ module hybridadder8_struct(Si,C8,Xi,Yi,C0);
 
     // Full-adders for S7 and S8
     Full_adder S6(Si[6],C7,Xi[6],Yi[6],C62[4]); // C6
-    Full_adder S7(Si[7],C8,Xi[7],Yi[7],C7)
+    Full_adder S7(Si[7],C8,Xi[7],Yi[7],C7);
 endmodule
