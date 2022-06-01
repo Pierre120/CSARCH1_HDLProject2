@@ -42,7 +42,7 @@ module hybridadder8_TB();
             $display("Specification: 2-bit ripple carry_4-bit carry lookahead_2-bit ripple carry");
 
 			$monitor("time = %0d\t", $time, 
-                    "X = %b\tY = %b\tC0 = %b\tS = %b C8 = %b",t_X,t_Y,C0,t_S,C8);
+                    "X = %b\tY = %b\tC0 = %b\tS = %b\tC8 = %b",t_X,t_Y,C0,t_S,C8);
 
 			$dumpfile("herp1.vcd");
 			$dumpvars;
