@@ -6,19 +6,19 @@ module half_adder(S,C,X,Y);
     input X,Y;
     output S,C;
 
-    assign S = X ^ Y;
-    assign C = X & Y;
+    assign S = X ^ Y; // XOR Gate
+    assign C = X & Y; // AND Gate
 endmodule
 
 // Full-Adder module
 module Full_adder(S,C,X,Y,Z);
-    input X,Y,Z;
+    input X,Y,Z; 
     output S,C;
     wire S1,C1,C2;
 
     half_adder H1(S1,C1,X,Y);
     half_adder H2(S,C2,S1,Z);
-    assign C = C2 | C1;
+    assign C = C2 | C1; // OR Gate
 endmodule
 
 // Full-Adder (no carry) module
@@ -129,6 +129,7 @@ module C6_lookahead(C6,G50,P50,C0);
     assign C6 = G50[5] | c62 | c63 | c64 | c65 | c66 | c67;
 endmodule
 
+// For generating the AND terms of each carry
 module carry_ANDs(C2T,C3T,C4T,C5T,C6T,G,P,C0);
     input [5:0] G,P;
     input C0;
@@ -241,6 +242,7 @@ module Sumer(Si,Pi,Ci);
     input Pi,Ci;
     output Si;
 
+    // 1 XOR Gate
     assign Si = Pi ^ Ci;
 endmodule
 
