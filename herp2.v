@@ -27,7 +27,7 @@ module Full_adder_nc(S,X,Y,Z);
     output S;
 
     // 2 XOR Gates
-    S = (X ^ Y) ^ Z;
+    assign S = (X ^ Y) ^ Z;
 endmodule
 
 // P and G generator module
