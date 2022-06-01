@@ -211,5 +211,16 @@ module hybridadder8_struct(Si,C8,Xi,Yi,C0);
     CLA_generator CLA(C62,G,P,C0);
 
     // Full-adders for S0 and S1
-    Full_adder S0(Si[0],);
+    Full_adder      S0(Si[0],C1,Xi[0],Yi[0],C0);
+    Full_adder_nc   S1(Si[1],Xi[1],Yi[1],C1);
+
+    // Sumers for S2 to S5
+    Sumer S2(Si[2],P[2],C62[0]); // C2
+    Sumer S3(Si[3],P[3],C62[1]); // C3
+    Sumer S4(Si[4],P[4],C62[2]); // C4
+    Sumer S5(Si[5],P[5],C62[3]); // C5
+
+    // Full-adders for S7 and S8
+    Full_adder S6(Si[6],C7,Xi[6],Yi[6],C62[4]); // C6
+    Full_adder S7(Si[7],C8,Xi[7],Yi[7],C7)
 endmodule
