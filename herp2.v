@@ -45,13 +45,31 @@ module C2_lookahead(C2,G10,P10,C0);
     input [1:0] G10,P10;
     input C0;
     output C2;
-    wire c22, c23; // 2nd and 3rd term of C2
+    wire c22, c23; // Terms for C2
 
+    // Get AND terms
     assign 
         c22 = P10[1] & G10[0], // C2 2nd term
         c23 = P10[1] & P10[0] & C0; // C2 3rd term
 
+    // Generate C2
     assign C2 = G10[1] | c22 | c23;
+endmodule
+
+module C3_lookahead(C3,G20,P20,C0);
+    input [2:0] G20,P20;
+    input C0;
+    output C3;
+    wire c32,c33,c34; // Terms for C3
+
+    // Get AND terms
+    assign
+        c32 = P20[2] & G20[1], // 2nd term
+        c33 = P20[2] & P20[1] & G20[0], // 3rd term
+        c34 = P20[2] & P20[1] & P20[0] & C0; // 4th term
+
+    // Generate C3
+    assign C3 = G20[2] | c32 | c33 | c34;
 endmodule
 
 // Carry-lookahead generator module
