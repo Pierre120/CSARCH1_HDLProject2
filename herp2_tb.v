@@ -40,6 +40,7 @@ module hybridadder8_TB();
             $display("\nWritten by: Pierre Vincent C. Hernandez");
             $display("8-bit Hybrid Adder Circuit");
             $display("Specification: 2-bit ripple carry_4-bit carry lookahead_2-bit ripple carry");
+			$display("Verilog Model: Structural Model");
 
 			$monitor("time = %0d\t", $time, 
                     "X = %b\tY = %b\tC0 = %b\tS = %b\tC8 = %b",t_X,t_Y,C0,t_S,C8);
