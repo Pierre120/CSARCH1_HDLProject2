@@ -29,7 +29,7 @@ module hybridadder8_TB();
 			
 			for(i=1; i<7; i++) begin
                 #10 t_X = t_xvals[i]; t_Y = t_yvals[i];
-                    if(i === 4)
+                    if(i == 4)
                         C0 = 1'b1;
             end
 
