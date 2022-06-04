@@ -39,6 +39,15 @@ module PG_generator(P,G,X,Y);
     assign G = X & Y; // carry generate
 endmodule
 
+// Sumer module
+module Sumer(Si,Pi,Ci);
+    input Pi,Ci;
+    output Si;
+
+    // 1 XOR Gate
+    assign Si = Pi ^ Ci;
+endmodule
+
 // For generating the AND terms of each carry
 module carry_ANDs(C2T,C3T,C4T,C5T,C6T,G,P,C0);
     input [5:0] G,P;
@@ -94,15 +103,6 @@ module CLA_generator(C62,G50,P50,C0);
         C62[2] = G50[3] | C4T[3] | C4T[2] | C4T[1] | C4T[0], // C4
         C62[3] = G50[4] | C5T[4] | C5T[3] | C5T[2] | C5T[1] | C5T[0], // C5
         C62[4] = G50[5] | C6T[5] | C6T[4] | C6T[3] | C6T[2] | C6T[1] | C6T[0]; // C6
-endmodule
-
-// Sumer module
-module Sumer(Si,Pi,Ci);
-    input Pi,Ci;
-    output Si;
-
-    // 1 XOR Gate
-    assign Si = Pi ^ Ci;
 endmodule
 
 // 8-bit Hybrid Adder (2-bit ripple carry_4-bit carry lookahead_2-bit ripple carry)
