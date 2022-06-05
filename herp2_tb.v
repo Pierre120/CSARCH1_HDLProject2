@@ -45,7 +45,7 @@ module hybridadder8_TB();
 			$monitor("time = %0d\t", $time, 
                     "X = %b\tY = %b\tC0 = %b\tS = %b\tC8 = %b",t_X,t_Y,C0,t_S,C8);
 
-			$dumpfile("herp1.vcd");
+			$dumpfile("herp2.vcd");
 			$dumpvars;
 		end
 endmodule
